@@ -1,0 +1,133 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "Barbershop Reservation API"
+paths:
+  /reservations:
+    get:
+      summary: "Get all reservations"
+      description: "Retrieve a list of all reservations in the calendar."
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Reservation"
+    post:
+      summary: "Add new reservation"
+      description: "Add a new reservation to the calendar."
+      parameters:
+        - name: "reservation"
+          in: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/Reservation"
+      responses:
+        201:
+          description: "Reservation added successfully"
+        400:
+          description: "Invalid request"
+  /reservations/{reservationId}:
+    put:
+      summary: "Update existing reservation"
+      description: "Update an existing reservation in the calendar."
+      parameters:
+        - name: "reservationId"
+          in: "path"
+          required: true
+          type: "integer"
+        - name: "reservation"
+          in: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/Reservation"
+      responses:
+        200:
+          description: "Reservation updated successfully"
+        404:
+          description: "Reservation not found"
+    delete:
+      summary: "Remove reservation"
+      description: "Remove a specific reservation from the calendar."
+      parameters:
+        - name: "reservationId"
+          in: "path"
+          required: true
+          type: "integer"
+      responses:
+        204:
+          description: "Reservation removed successfully"
+        404:
+          description: "Reservation not found"
+  /reservations/search/service/{serviceType}:
+    get:
+      summary: "Search reservations by service"
+      description: "Retrieve reservations based on the service provided by the customer."
+      parameters:
+        - name: "serviceType"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Reservation"
+  /reservations/search/customer/{customerName}:
+    get:
+      summary: "Search reservations by customer name"
+      description: "Retrieve reservations based on the customer's name."
+      parameters:
+        - name: "customerName"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Reservation"
+  /reservations/search/time:
+    get:
+      summary: "Search reservations by time period"
+      description: "Retrieve reservations based on a specified time period."
+      parameters:
+        - name: "startTime"
+          in: "query"
+          required: true
+          type: "string"
+        - name: "endTime"
+          in: "query"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Reservation"
+definitions:
+  Reservation:
+    type: "object"
+    properties:
+      reservationId:
+        type: "integer"
+      customerName:
+        type: "string"
+      serviceType:
+        type: "string"
+      startTime:
+        type: "string"
+      endTime:
+        type: "string"
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /EMKLIFE_1/Reservation/1.0.0
+schemes:
+ - https
